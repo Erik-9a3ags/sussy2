@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sussy Random Question</title>
+    <style>
+        body {
+            background-color: #ffdde1;
+            color: #d63384;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            position: relative;
+        }
+        .container {
+            width: 80%;
+            max-width: 800px;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        button {
+            background-color: #d63384;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+            position: relative;
+        }
+        button:hover {
+            background-color: #b52d6b;
+        }
+        .question {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .counter {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 16px;
+            color: #d63384;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Romantic Random Question</h1>
+        <p>Click the button to get a romantic question!</p>
+        <button onclick="generateQuestion()">❤️ Get Question ❤️</button>
+        <div class="question" id="question"></div>
+    </div>
+    <div class="counter" id="counter">Questions Asked: 0</div>
+
+    <script>
+        const questions = [
+            "1. Age",
+            "2. Gender",
+            "3. Height",
+            "4. Weight",
+            "5. Where are you from",
+            "6. Zodiac Sign",
+            "7. Birthday",
+            "8. Main Language(s)",
+            "9. Favorite Color",
+            "10. Favorite Food",
+            "11. Favorite Drink",
+            "12. Favorite Activity",
+            "13. Favorite Music genre",
+            "14. Favorite Artist",
+            "15. Favorite Song",
+            "16. Favorite Movie",
+            "17. Favorite Video Game (if any)",
+            "18. Favorite TV Show",
+            "19. Favorite Sport (if any)",
+            "20. Favorite Hobby",
+            "21. Favorite Outfit",
+            "22. Sexuality",
+            "23. Relationship Status",
+            "24. Celebrity Crush",
+            "25. Ideal Partner",
+            "26. Ideal Date",
+            "27. Have you asked someone out before",
+            "28. Turn Offs",
+            "29. Turn Ons",
+            "30. Do you have any crushes",
+            "31. Does anyone have a crush on you",
+            "32. Have you had your first kiss",
+            "33. How many friends do you have",
+            "34. What social media do you have",
+            "35. What's your username on each",
+            "36. Do you follow NSFW pages",
+            "37. Most Used Social Media app",
+            "38. Most followed/popular Social Media app",
+            "39. Have you met any of your friends online",
+            "40. How much do you use Social Media",
+            "41. Favorite Meme",
+            "42. What kind of phone do you have",
+            "43. Hair Color",
+            "44. Ethnicity",
+            "45. Eye Color",
+            "46. Do you wear makeup",
+            "47. Do you wear nail polish",
+            "48. Body Style",
+            "49. Hair Style",
+            "50. What kind of clothes do you wear",
+            "51. Do you have any piercings",
+            "52. Do you have any tattoos",
+            "53. Have you ever had a same-sex experience",
+            "54. Favorite Memory",
+            "55. Most embarrassing moment",
+            "56. Have you ever smoked anything",
+            "57. Have you ever done drugs",
+            "58. Have you ever had alcohol",
+            "59. Have you ever done anything illegal (pirating movies doesn't count)",
+            "60. Have you ever gotten in a fight",
+            "61. Have you ever pulled an all-nighter",
+            "62. What is the worst thing you've ever eaten",
+            "63. How far have you ever traveled from your country (if any)",
+            "64. Favorite Vacation",
+            "65. Do you have your driver's license",
+            "66. Most famous person you've met",
+            "67. How much money do u have" ,
+            "68. Most prized possewssion",
+            "69. Most embarrasing possesion" ,
+            "70. What did you buy recently",
+            "71. Most expensive thing you own",
+            "72. Coolest thing you own",
+            "73. Oldest thing you own",
+            "74. Most futuristic possession",
+            "75. Weirdest thing you own",
+            "76. Most useful thing you own",
+            "77. Favorite item of clothing",
+            "78. Most illegal thing you own",
+            "79. Favorite thing you've been given as a gift",
+            "80. Least favorite thing you own Location/House:" ,
+            "81. Do you live in a house or an apartment" ,
+            "82. What color is your house" ,
+            "83. Cool fact about your house" ,
+            "84. Do you live in the city or a small town" ,
+            "85. How big is your house" ,
+            "86. Do you have cameras around your house" ,
+            "87. Do you have your own room" ,
+            "88. Favorite thing about your house" ,
+            "89. Least favorite thing about your house" ,
+            "90. Do you like where you live" ,
+            "91. Where would you move if you had to" ,
+            "92. Do you live in a dangerous area" ,
+            "93. Coolest place near your house" ,
+            "93. Coolest place near your house" ,
+            "94. Have you ever snuck out" ,
+            "95. Yellow or purple" ,
+            "96. Taylor Swift or Justin Bieber" ,
+            "97. DC or Marvel" ,
+            "98. Spicy or sour" ,
+            "99. Hot or cold weather" ,
+            "100. Summer or winter" ,
+            "101. Feminine or masculine 102. Movies or TV" ,
+            "103. Xbox or Playstation" ,
+            "104. Simpsons or Family Guy" ,
+            "105. Cats or dogs" ,
+            "104. Simpsons or Family Guy" ,
+            "106. Board games or card games 107." ,
+            "107. Outside or inside movies" ,
+            "108. The Office or Parks and Recreation" ,
+            "109. Jurassic Park or World" ,
+            "110. Disneyland or Universal Studios" ,
+            "111. Take a bath in lemon juice while you're covered in paper cuts or put a toothpick in your toenail and kick the wall" ,
+            "112. McDonalds or Burger King" ,
+            "113. Horror or comedy" ,
+            "114. Heavy metal or alternative rock" ,
+            "115. Harry Potter or Lord of the Rings" ,
+            "116. Star Wars or Star Trek" ,
+            "117. Subway or Jimmy Johns" ,
+            "118. Invisibility or mind control" ,
+            "119. Juice WRLD or XXXTENTACION" ,
+            "120. Baseball or soccer(football) Life/School:" ,
+            "121. Do you have any pets" ,
+            "122. How many people are in your family" ,
+            "123. How many friends do you have" ,
+            "124. What kind of school do you go to" ,
+            "125. Last bad grade" ,
+            "126. Last good grade" ,
+            "127. Favorite class" ,
+            "128. Least favorite class" ,
+            "129. Favorite teacher" ,
+            "130. Least favorite teacher" ,
+            "131. What's your school's colors" ,
+            "132. What's your school's mascot" ,
+            "133. Craziest thing to happen at your school" ,
+            "134. Are you in any clubs" ,
+            "135. Do you play any sports" ,
+            "136. Do you have a job" ,
+            "137. Do you go to the gym" ,
+            "138. Least favorite person" ,
+            "139. Least favorite relative" ,
+            "140. Are you friends with anyone more than 3 years younger than you" ,
+            "141. Are you friends with anyone more than 3 years older than you" ,
+            "142. Have you ever seen someone naked" ,
+            "143. Have you ever sucked dick" ,
+            "144. Have you ever recieved head" ,
+            "145. How often do you masturbate (if at all)" ,
+            "146. Are you a virgin" ,
+            "147. How do you masturbate" ,
+            "148. Do you watch porn" ,
+            "149. Bra/Dick size" ,
+            "150. Ideal Sex Position" ,
+            "151. Favorite Sexual Fantasy" ,
+            "152. Has anyone seen you naked" ,
+            "153. Have you ever sent a nude" ,
+            "154. Have you ever recieved a nude" ,
+            "155. Have you ever eaten pussy" ,
+            "156. Have you ever eaten ass" ,
+            "157. Do you like to get pegged" ,
+            "158. Have you ever fingered yourself" ,
+            "159. How often do you have sex (if at all)" ,
+            "160. Are you a dom, sub, or switch 161. Are you into BDSM" ,
+            "162. When was the last time you got hard (guys only)" ,
+            "163. Are you circumsized (guys only)" ,
+            "164. Has anyone ever caught you masturbating" ,
+            "165. Most embarassing sexual story" ,
+            "166. Most horny story" ,
+            "167. Do you own any sex toys" ,
+            "168. What kind of porn do you watch" ,
+            "169. Have you ever been fingered by someone else" ,
+            "170. What makes you horny" ,
+            "171. Favorite way to relieve horniness" ,
+            "172. Do you use lube" ,
+            "173. What kind of lube do you use" ,
+            "174. Protected or unprotected sex" ,
+            "175. Have you ever been naked in public" ,
+            "176. Have you ever played a strip game" ,
+            "177. Do you sleep naked" ,
+            "179. What kind of underwear do you wear" ,
+            "180. Have you ever tasted cum" ,
+            "181. Do you have any STDs" ,
+            "182. Have you ever sexted before" ,
+            "183. What are you wearing" ,
+            "184. Are you horny" ,
+            "185. Do you want to sext" ,
+            "186. Send me a selfie" ,
+            "187. Ask me whatever you want (i cant say no)" ,
+            "188. What time is it for you" ,
+            "189. Where are you right now" ,
+            "190. What's your mood right now" ,
+            "191. What do you think of me" ,
+            "192. Am I attractive" ,
+            "193. Tell me to do whatever you want (I can't say no)" ,
+            "194. Do you want to exchange numbers" ,
+            "195. What are you doing right now" ,
+            "196. Do whatever I say (you can't say no)" ,
+            "197. Do you want to date" ,
+            "198. Do you want to be friends" ,
+            "199. What percent is your phone at" ,
+            "200. Do you want to have sex with me" ,
+        ];
+        
+        let questionCount = 0;
+        
+        function generateQuestion() {
+            let randomIndex = Math.floor(Math.random() * questions.length);
+            document.getElementById('question').innerHTML = `<strong>${questions[randomIndex]}</strong>`;
+            questionCount++;
+            document.getElementById('counter').innerText = `Questions Asked: ${questionCount}`;
+        }
+    </script>
+</body>
+</html>
